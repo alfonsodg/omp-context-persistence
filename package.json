@@ -1,0 +1,13 @@
+{
+  "name": "omp-context-persistence",
+  "version": "0.1.0",
+  "description": "Oh My Pi extension that re-injects AGENTS.md context after compaction.",
+  "type": "module",
+  "main": "src/index.ts",
+  "keywords": ["omp", "oh-my-pi", "extension", "context", "compaction", "agents-md"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alfonsodg/omp-context-persistence.git"
+  }
+}
