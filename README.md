@@ -16,6 +16,10 @@ content into the compaction summary.
 
 Place in `~/.omp/agent/extensions/` or install via `omp plugin install`.
 
+## Author
+
+Alfonso de la Guarda Reyes <alfonsodg@gmail.com>
+
 ## License
 
 MIT
