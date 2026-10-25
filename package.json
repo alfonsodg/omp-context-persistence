@@ -1,6 +1,6 @@
 {
   "name": "omp-context-persistence",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Oh My Pi extension that re-injects AGENTS.md context after compaction.",
   "type": "module",
   "main": "src/index.ts",
