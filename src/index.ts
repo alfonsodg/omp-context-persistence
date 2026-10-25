@@ -1,19 +1,29 @@
-// OMP extension: re-inject AGENTS.md after compaction
-// OMP uses Pi extension API; session_before_compact event
-export default function (pi: any) {
+// OMP (Oh My Pi) extension: re-inject AGENTS.md after compaction.
+// OMP is Pi-compatible; uses the same extension API and events.
+import { readFileSync, existsSync } from "node:fs"
+import { join } from "node:path"
+
+interface ExtensionAPI {
+  on(event: string, handler: (event: any, ctx: any) => void | Promise<void>): void
+}
+
+export default function (pi: ExtensionAPI) {
   pi.on("session_before_compact", async (event: any, ctx: any) => {
-    const fs = await import("node:fs")
-    const path = await import("node:path")
-    const agentsPath = path.join(ctx.cwd, "AGENTS.md")
+    const cwd = ctx?.cwd || process.cwd()
+    const agentsPath = join(cwd, "AGENTS.md")
     try {
-      if (fs.existsSync(agentsPath)) {
-        const content = fs.readFileSync(agentsPath, "utf-8")
+      if (existsSync(agentsPath)) {
+        const content = readFileSync(agentsPath, "utf-8")
+        const excerpt = content.slice(0, 4000)
         if (event.compactionSummary) {
-          event.compactionSummary += "\n\n## Re-injected AGENTS.md\n" + content.slice(0, 2000)
+          event.compactionSummary +=
+            "\n\n## Re-injected AGENTS.md (context persistence)\n" + excerpt
+        } else {
+          event.compactionSummary = "## Re-injected AGENTS.md (context persistence)\n" + excerpt
         }
       }
     } catch {
-      // ignore
+      // ignore read errors
     }
   })
 }
